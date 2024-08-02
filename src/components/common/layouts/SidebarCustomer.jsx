@@ -11,46 +11,63 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
   }, [location.pathname]);
 
   const pages = [
-    { path: "/customer/dashboard", icon: DashboardIcon, title: "Dashboard" },
+    { path: "/", icon: DashboardIcon, title: "Home" },
     {
-      path: "/customer/orders",
-      icon: OrdersIcon,
-      title: "Order List",
+      path: "/favorite",
+      icon: FavoriteIcon,
+      title: "Favorite",
+    },
+    {
+      path: "/categories",
+      icon: CategoryIcon,
+      title: "Categories",
     },
   ];
 
   function DashboardIcon() {
     return (
       <svg
-        className={`w-5 h-5 transition duration-75  group-hover:text-teal-500  ${
-          activePage === "/marketing/dashboard"
-            ? "text-teal-500"
-            : "text-gray-500"
+        className={`w-5 h-5 transition duration-75 group-hover:text-teal-500 ${
+          activePage === "/home" ? "text-teal-500" : "text-gray-500"
         }`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
         viewBox="0 0 24 24"
       >
-        <path d="M4 13h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1zm-1 7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v4zm10 0a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v7zm1-10h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1z" />
+        <path d="M3 13h7v7H3v-7zm0-8h7v7H3V5zm8 8h7v7h-7v-7zm0-8h7v7h-7V5zm8 16h7v-7h-7v7z" />
       </svg>
     );
   }
 
-  function OrdersIcon() {
+  function FavoriteIcon() {
     return (
       <svg
-        className={`w-5 h-5 transition duration-75  group-hover:text-teal-500  ${
-          activePage === "/marketing/attendance"
-            ? "text-teal-500"
-            : "text-gray-500"
+        className={`w-5 h-5 transition duration-75 group-hover:text-teal-500 ${
+          activePage === "/favorite" ? "text-teal-500" : "text-gray-500"
         }`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
         viewBox="0 0 24 24"
       >
-        <path d="M11 22v-2H5c-1.11 0-1.99-.89-1.99-2L3 5c0-1.11.89-2 2-2h10c1.11 0 2 .89 2 2v13c0 1.11-.89 2-2 2h-6v2h4c1.11 0 2-.89 2-2V5h2v15h-8zM5 5v13h6V5H5z" />
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      </svg>
+    );
+  }
+
+  function CategoryIcon() {
+    return (
+      <svg
+        className={`w-5 h-5 transition duration-75 group-hover:text-teal-500 ${
+          activePage === "/categories" ? "text-teal-500" : "text-gray-500"
+        }`}
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path d="M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h16v4H4v-4z" />
       </svg>
     );
   }
