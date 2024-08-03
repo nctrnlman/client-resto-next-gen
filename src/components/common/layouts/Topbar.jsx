@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../../../assets/logo/icon-dark.png";
 // import logo from "../../assets/logo/sms-logo.jpeg";
 import ava from "../../../assets/profile/ava.png";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,17 +12,17 @@ const Topbar = ({ toggleSidebar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  // const userData = useSelector((state) => state.user.User);
+  const userData = useSelector((state) => state.user.User);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("user_token");
+    localStorage.removeItem("token");
     toast.success("Logout success");
     setIsDropdownOpen(false);
-    navigate("/login");
+    navigate("/admin/login");
   };
 
   const isAdminPage = location.pathname.includes("admin");
@@ -84,13 +84,13 @@ const Topbar = ({ toggleSidebar }) => {
                   >
                     <div className="px-4 py-3" role="none">
                       <p className="text-sm text-gray-900 " role="none">
-                        {/* {userData.name} */} Nama
+                        {userData.name}
                       </p>
                       <p
                         className="text-sm font-medium text-gray-900 truncate "
                         role="none"
                       >
-                        {/* {userData.email} */} Email
+                        {userData.email}
                       </p>
                     </div>
                     <ul className="py-1" role="none">

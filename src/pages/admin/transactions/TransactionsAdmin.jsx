@@ -1,5 +1,5 @@
 import Layout from "../../../components/common/layouts/LayoutAdmin";
-function OrdersAdmin() {
+function TransactionsAdmin() {
   return (
     <Layout>
       <main className="flex flex-col gap-4 ">Order List </main>
@@ -7,4 +7,4 @@ function OrdersAdmin() {
   );
 }
 
-export default OrdersAdmin;
+export default TransactionsAdmin;

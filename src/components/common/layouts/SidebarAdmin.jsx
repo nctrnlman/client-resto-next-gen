@@ -11,21 +11,25 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
   }, [location.pathname]);
 
   const pages = [
-    { path: "/admin/dashboard", icon: DashboardIcon, title: "Dashboard" },
+    { path: "/admin/home", icon: DashboardIcon, title: "Home" },
     {
-      path: "/admin/orders",
-      icon: OrdersIcon,
-      title: "Order List",
+      path: "/admin/users",
+      icon: UsersIcon,
+      title: "Users",
+    },
+    { path: "/admin/products", icon: ProductsIcon, title: "Products" },
+    {
+      path: "/admin/transactions",
+      icon: TransactionIcon,
+      title: "Transactions",
     },
   ];
 
-  function DashboardIcon() {
+  function DashboardIcon({ activePage }) {
     return (
       <svg
         className={`w-5 h-5 transition duration-75  group-hover:text-teal-500  ${
-          activePage === "/marketing/dashboard"
-            ? "text-teal-500"
-            : "text-gray-500"
+          activePage === "/admin/home" ? "text-teal-500" : "text-gray-500"
         }`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -37,11 +41,43 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
     );
   }
 
-  function OrdersIcon() {
+  function UsersIcon({ activePage }) {
     return (
       <svg
         className={`w-5 h-5 transition duration-75  group-hover:text-teal-500  ${
-          activePage === "/marketing/attendance"
+          activePage === "/admin/users" ? "text-teal-500" : "text-gray-500"
+        }`}
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path d="M9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5 6 6.34 6 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C16 14.17 11.33 13 9 13zm6-2h6v-2h-6v2zm-2-4h8V5h-8v2zm-2 8h4v-2h-4v2z" />
+      </svg>
+    );
+  }
+
+  function ProductsIcon({ activePage }) {
+    return (
+      <svg
+        className={`w-5 h-5 transition duration-75  group-hover:text-teal-500  ${
+          activePage === "/admin/products" ? "text-teal-500" : "text-gray-500"
+        }`}
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path d="M20 8h-2V5c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2zM8 5h8v3H8V5zm8 14H8v-6h8v6zm4-4h-2v2h-2v-2H6v2H4v-2H2v4h20v-4z" />
+      </svg>
+    );
+  }
+
+  function TransactionIcon({ activePage }) {
+    return (
+      <svg
+        className={`w-5 h-5 transition duration-75  group-hover:text-teal-500  ${
+          activePage === "/admin/transaction"
             ? "text-teal-500"
             : "text-gray-500"
         }`}
