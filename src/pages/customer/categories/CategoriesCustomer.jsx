@@ -1,5 +1,5 @@
+import DashboardBanner from "../../../components/common/cards/DashboardBanner";
 import Layout from "../../../components/common/layouts/LayoutCustomer";
-import DashboardBanner from "./components/DashboardBanner";
 import CategoryList from "./sections/CategoryList";
 
 function CategoriesCustomer() {

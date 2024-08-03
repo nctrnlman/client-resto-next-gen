@@ -1,5 +1,6 @@
+import DashboardBanner from "../../../components/common/cards/DashboardBanner";
 import Layout from "../../../components/common/layouts/LayoutAdmin";
-import DashboardBanner from "./components/DashboardBanner";
+
 import ProductList from "./sections/ProductList";
 
 function DashboardAdmin() {
