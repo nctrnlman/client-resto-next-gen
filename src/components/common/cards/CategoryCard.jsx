@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const CategoryCard = ({ category }) => {
+  const navigate = useNavigate();
+
+  const handleSeeProductsClick = () => {
+    navigate(`/?categoryId=${category.id}`);
+  };
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105">
       <img
@@ -8,6 +16,12 @@ const CategoryCard = ({ category }) => {
       />
       <div className="p-4">
         <h2 className="text-xl font-bold">{category.category_name}</h2>
+        <button
+          onClick={handleSeeProductsClick}
+          className="mt-2 px-4 py-2 bg-teal-500 text-white rounded-lg"
+        >
+          See Products
+        </button>
       </div>
     </div>
   );

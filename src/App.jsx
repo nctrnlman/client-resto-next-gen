@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import DashboardAdmin from "./pages/admin/dashboard/DashboardAdmin";
 import LoginAdmin from "./pages/admin/auth/LoginAdmin";
@@ -11,7 +11,24 @@ import PrivateRoute from "./utils/PrivateRoute";
 import UsersAdmin from "./pages/admin/users/UsersAdmin";
 import ProductsAdmin from "./pages/admin/products/ProductsAdmin";
 
+import { useState } from "react";
+import CartIcon from "./components/common/icons/CartIcon";
+import CartModal from "./components/common/cards/CartModal";
+
 function App() {
+  const location = useLocation();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const handleCartIconClick = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCloseCartModal = () => {
+    setIsCartOpen(false);
+  };
+
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <>
       <Routes>
@@ -54,6 +71,13 @@ function App() {
 
         <Route path="/admin/login" element={<LoginAdmin />} />
       </Routes>
+
+      {!isAdminRoute && (
+        <>
+          <CartIcon onClick={handleCartIconClick} />
+          <CartModal isOpen={isCartOpen} onClose={handleCloseCartModal} />
+        </>
+      )}
     </>
   );
 }

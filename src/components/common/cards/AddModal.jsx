@@ -39,7 +39,7 @@ const AddModal = ({ isOpen, onClose, onSubmit, fields }) => {
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 ${
+      className={`fixed inset-0 flex items-center justify-center mr-4 bg-gray-900 bg-opacity-50 ${
         isOpen ? "block" : "hidden"
       }`}
     >

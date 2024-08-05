@@ -3,13 +3,21 @@ import axios from "axios";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
-    const response = await axios.get("http://localhost:8000/api/products", {
-      // headers: {
-      //   Authorization: `Bearer ${localStorage.getItem("token")}`, // Sesuaikan dengan tokenmu
-      // },
-    });
-    return response.data.data;
+  async ({ category, search }, thunkAPI) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/products", {
+        params: {
+          categoryId: category || "",
+          search: search || "",
+        },
+        // headers: {
+        //   Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust this as needed
+        // },
+      });
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.errors);
+    }
   }
 );
 
@@ -32,7 +40,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });
