@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../../assets/logo/icon-dark.png";
+import logo from "../../../assets/logo/Garden.png";
 // import logo from "../../assets/logo/sms-logo.jpeg";
 import ava from "../../../assets/profile/ava.png";
 import { useSelector } from "react-redux";
@@ -54,10 +54,10 @@ const Topbar = ({ toggleSidebar }) => {
               </svg>
             </button>
             <a className="flex ms-2 md:me-24">
-              <img src={logo} className="h-16 me-3" alt="Company Logo" />
-              <span className="self-center text-xl font-medium sm:text-2xl whitespace-nowrap ">
+              {/* <img src={logo} className="h-16 me-3" alt="Company Logo" /> */}
+              {/* <span className="self-center text-xl font-medium sm:text-2xl whitespace-nowrap ">
                 Codenito
-              </span>
+              </span> */}
             </a>
           </div>
           {isAdminPage && (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import codenito from "../../../assets/logo/icon-dark.png";
+import garden from "../../../assets/logo/garden-logo.png";
 
 const SidebarAdmin = ({ isOpen, onClose }) => {
   const location = useLocation();
@@ -133,11 +133,10 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
           <div className="flex justify-center items-center pt-10 md:text-lg">
             {isOpen ? (
               <>
-                <p>Supported by</p>
-                <img src={codenito} className="h-8 me-3" alt="Company Logo" />
+                <img src={garden} className="h-44 me-3" alt="Company Logo" />
               </>
             ) : (
-              <img src={codenito} className="h-8" alt="Company Logo" />
+              <img src={garden} className="h-8" alt="Company Logo" />
             )}
           </div>
         </div>

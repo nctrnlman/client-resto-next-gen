@@ -2,7 +2,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useLoginForm from "../../../hooks/useLoginForm";
 import LoginForm from "./components/LoginForm";
-import icon from "../../../assets/logo/icon-dark.png";
+import icon from "../../../assets/logo/garden-logo.png";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -44,7 +44,7 @@ function LoginAdmin() {
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
           >
-            <img className="w-8 h-8 mr-2" src={icon} alt="logo" />
+            <img className="h-44 mr-2" src={icon} alt="logo" />
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
