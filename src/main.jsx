@@ -11,7 +11,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -23,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           draggable
           pauseOnHover
         />
+        <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

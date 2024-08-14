@@ -2,7 +2,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import DashboardAdmin from "./pages/admin/dashboard/DashboardAdmin";
 import LoginAdmin from "./pages/admin/auth/LoginAdmin";
-import Index from "./pages/base/Index";
 import DashboardCustomer from "./pages/customer/dashboard/DashboardCustomer";
 import TransactionsAdmin from "./pages/admin/transactions/TransactionsAdmin";
 import FavoriteCustomer from "./pages/customer/favorite/FavoriteCustomer";
@@ -10,14 +9,37 @@ import CategoriesCustomer from "./pages/customer/categories/CategoriesCustomer";
 import PrivateRoute from "./utils/PrivateRoute";
 import UsersAdmin from "./pages/admin/users/UsersAdmin";
 import ProductsAdmin from "./pages/admin/products/ProductsAdmin";
-
-import { useState } from "react";
 import CartIcon from "./components/common/icons/CartIcon";
 import CartModal from "./components/common/cards/CartModal";
+import LoginCustomer from "./pages/customer/auth/login/LoginCustomer";
+import RegisterCustomer from "./pages/customer/auth/register/RegisterCustomer";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./features/users/user";
+import { fetchUserDetail } from "./hooks/useFetchUserDetail";
 
 function App() {
   const location = useLocation();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.User);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token && user.length === 0) {
+      const fetchUser = async () => {
+        try {
+          const userData = await fetchUserDetail(token);
+          dispatch(setUser(userData.data));
+        } catch (error) {
+          console.error("Error fetching user data:", error.message);
+        }
+      };
+
+      fetchUser();
+    }
+  }, [dispatch, user]);
 
   const handleCartIconClick = () => {
     setIsCartOpen(true);
@@ -27,15 +49,40 @@ function App() {
     setIsCartOpen(false);
   };
 
-  const isAdminRoute = location.pathname.startsWith("/admin");
-
   return (
     <>
       <Routes>
-        {/* <Route path="/" element={<Index />} /> */}
-        <Route path="/" element={<DashboardCustomer />} />
-        <Route path="/favorite" element={<FavoriteCustomer />} />
-        <Route path="/categories" element={<CategoriesCustomer />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<LoginCustomer />} />
+        <Route path="/register" element={<RegisterCustomer />} />
+
+        {/* Private Routes for Customers */}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <DashboardCustomer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/favorite"
+          element={
+            <PrivateRoute>
+              <FavoriteCustomer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <PrivateRoute>
+              <CategoriesCustomer />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Admin Routes */}
         <Route
           path="/admin/home"
           element={
@@ -68,11 +115,11 @@ function App() {
             </PrivateRoute>
           }
         />
-
         <Route path="/admin/login" element={<LoginAdmin />} />
       </Routes>
 
-      {!isAdminRoute && (
+      {/* Show cart icon and modal if not on admin route */}
+      {!location.pathname.startsWith("/admin") && (
         <>
           <CartIcon onClick={handleCartIconClick} />
           <CartModal isOpen={isCartOpen} onClose={handleCloseCartModal} />
