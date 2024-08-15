@@ -1,10 +1,13 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./features/users/user";
+import { fetchUserDetail } from "./hooks/useFetchUserDetail";
 import "./App.css";
 import DashboardAdmin from "./pages/admin/dashboard/DashboardAdmin";
 import LoginAdmin from "./pages/admin/auth/LoginAdmin";
 import DashboardCustomer from "./pages/customer/dashboard/DashboardCustomer";
 import TransactionsAdmin from "./pages/admin/transactions/TransactionsAdmin";
-import FavoriteCustomer from "./pages/customer/favorite/FavoriteCustomer";
 import CategoriesCustomer from "./pages/customer/categories/CategoriesCustomer";
 import PrivateRoute from "./utils/PrivateRoute";
 import UsersAdmin from "./pages/admin/users/UsersAdmin";
@@ -13,10 +16,7 @@ import CartIcon from "./components/common/icons/CartIcon";
 import CartModal from "./components/common/cards/CartModal";
 import LoginCustomer from "./pages/customer/auth/login/LoginCustomer";
 import RegisterCustomer from "./pages/customer/auth/register/RegisterCustomer";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "./features/users/user";
-import { fetchUserDetail } from "./hooks/useFetchUserDetail";
+import BillCustomer from "./pages/customer/bill/BillCustomer";
 
 function App() {
   const location = useLocation();
@@ -66,10 +66,10 @@ function App() {
           }
         />
         <Route
-          path="/favorite"
+          path="/bill"
           element={
             <PrivateRoute>
-              <FavoriteCustomer />
+              <BillCustomer />
             </PrivateRoute>
           }
         />

@@ -13,14 +13,14 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
   const pages = [
     { path: "/", icon: DashboardIcon, title: "Home" },
     {
-      path: "/favorite",
-      icon: FavoriteIcon,
-      title: "Favorite",
-    },
-    {
       path: "/categories",
       icon: CategoryIcon,
       title: "Categories",
+    },
+    {
+      path: "/bill",
+      icon: BillIcon,
+      title: "Bill",
     },
   ];
 
@@ -28,7 +28,7 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
     return (
       <svg
         className={`w-5 h-5 transition duration-75 group-hover:text-teal-500 ${
-          activePage === "/home" ? "text-teal-500" : "text-gray-500"
+          activePage === "/" ? "text-teal-500" : "text-gray-500"
         }`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -40,18 +40,18 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
     );
   }
 
-  function FavoriteIcon() {
+  function BillIcon() {
     return (
       <svg
         className={`w-5 h-5 transition duration-75 group-hover:text-teal-500 ${
-          activePage === "/favorite" ? "text-teal-500" : "text-gray-500"
+          activePage === "/bill" ? "text-teal-500" : "text-gray-500"
         }`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
         viewBox="0 0 24 24"
       >
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        <path d="M7 2h10c1.1 0 2 .9 2 2v16.92c0 .58-.4 1.08-.97 1.21-.5.11-.98-.15-1.2-.6L14 18l-2 3-2-3-2.83 5.53c-.22.45-.7.71-1.2.6-.57-.13-.97-.63-.97-1.21V4c0-1.1.9-2 2-2zm1 14h8v2H8v-2zm0-4h8v2H8v-2zm0-4h8v2H8V8z" />
       </svg>
     );
   }
