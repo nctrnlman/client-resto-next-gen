@@ -1,15 +1,15 @@
 import { useState } from "react";
-import logo from "../../../assets/logo/Garden.png";
-// import logo from "../../assets/logo/sms-logo.jpeg";
 import ava from "../../../assets/profile/ava.png";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Topbar = ({ toggleSidebar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
   const userData = useSelector((state) => state.user.User);
 
   const toggleDropdown = () => {
@@ -20,7 +20,11 @@ const Topbar = ({ toggleSidebar }) => {
     localStorage.removeItem("token");
     toast.success("Logout success");
     setIsDropdownOpen(false);
-    navigate("/admin/login");
+    if (location.pathname.includes("admin")) {
+      navigate("/admin/login");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -49,12 +53,7 @@ const Topbar = ({ toggleSidebar }) => {
                 />
               </svg>
             </button>
-            <a className="flex ms-2 md:me-24">
-              {/* <img src={logo} className="h-16 me-3" alt="Company Logo" /> */}
-              {/* <span className="self-center text-xl font-medium sm:text-2xl whitespace-nowrap ">
-                Codenito
-              </span> */}
-            </a>
+            <a className="flex ms-2 md:me-24"></a>
           </div>
 
           <div className="flex items-center relative">
