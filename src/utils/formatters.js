@@ -1,6 +1,6 @@
 export const formatCurrencyToIDR = (value) => {
   if (typeof value !== "string") return value;
-  const numberValue = parseFloat(value.replace(/[^0-9.-]+/g, "")); // Menghapus karakter non-numerik
+  const numberValue = parseFloat(value.replace(/[^0-9.-]+/g, ""));
   if (isNaN(numberValue)) return value;
   return new Intl.NumberFormat("id-ID", {
     style: "currency",

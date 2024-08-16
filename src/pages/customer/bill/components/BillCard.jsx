@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchOrders } from "../../../../features/orders/order";
-import { formatCurrency } from "../../../../utils/formatCurrency";
+import { formatCurrencyToIDR } from "../../../../utils/formatters";
 
 const BillCard = () => {
   const dispatch = useDispatch();
@@ -55,7 +55,8 @@ const BillCard = () => {
                       <div>
                         <p>{item.Product.product_name}</p>
                         <p className="text-sm text-gray-600">
-                          {item.quantity} x {formatCurrency(item.product_price)}
+                          {item.quantity} x{" "}
+                          {formatCurrencyToIDR(item.product_price)}
                         </p>
                       </div>
                     </div>
@@ -65,7 +66,7 @@ const BillCard = () => {
             </div>
             <div className="mt-4 border-t pt-4">
               <p className="text-lg font-bold">
-                Total Price: {formatCurrency(order.total_price)}
+                Total Price: {formatCurrencyToIDR(order.total_price)}
               </p>
             </div>
           </div>

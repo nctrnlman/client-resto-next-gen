@@ -8,7 +8,7 @@ function UsersAdmin() {
         <div className="p-4">
           <DashboardBanner
             title="Users Page"
-            message="Hello! We're glad to have you here. Explore our wide range of products and manage your orders easily. If you need any help, feel free to reach out to our support team."
+            message="Welcome to the Users Page! Here you can manage and view all user accounts. Feel free to explore user profiles, update details, and monitor user activity. If you have any questions or need assistance, our support team is here to help!"
           />
         </div>
         <div className="px-4">

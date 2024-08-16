@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../../../features/orders/order";
 import useCheckout from "../../../hooks/useCheckout";
+import { formatCurrencyToIDR } from "../../../utils/formatters";
 
 const CartModal = ({ isOpen, onClose }) => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -81,7 +82,7 @@ const CartModal = ({ isOpen, onClose }) => {
                 <div>
                   <h3 className="font-bold">{item.product_name}</h3>
                   <p>
-                    IDR {item.product_price} x {item.quantity}
+                    {formatCurrencyToIDR(item.product_price)} x {item.quantity}
                   </p>
                 </div>
                 <button
@@ -93,7 +94,9 @@ const CartModal = ({ isOpen, onClose }) => {
               </div>
             ))}
             <div className="mt-4">
-              <p className="text-lg font-bold">Total Price: IDR {totalPrice}</p>
+              <p className="text-lg font-bold">
+                Total Price: {formatCurrencyToIDR(totalPrice)}
+              </p>
               {!orderExists && (
                 <div className="mt-4">
                   <label className="block mb-2">Order Type:</label>

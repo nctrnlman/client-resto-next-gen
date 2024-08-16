@@ -16,9 +16,15 @@ const UserList = () => {
 
   const handleAddUser = async (newUser) => {
     try {
-      const response = await axiosInstance.post("/auth/register", newUser, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const userWithRole = { ...newUser, role: 1 };
+
+      const response = await axiosInstance.post(
+        "/auth/register",
+        userWithRole,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
       refetch();
       setAddModalOpen(false);
       toast.success(response.data.message);
@@ -74,6 +80,15 @@ const UserList = () => {
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 200 },
     { field: "email", headerName: "Email", width: 250 },
+    {
+      field: "role",
+      headerName: "Role",
+      width: 250,
+      renderCell: (params) => {
+        const role = params.value;
+        return role === 1 ? "Admin" : role === 2 ? "Customer" : "Unknown";
+      },
+    },
   ];
 
   if (error) {
@@ -119,12 +134,6 @@ const UserList = () => {
         fields={[
           { name: "name", label: "Name", type: "text", required: true },
           { name: "email", label: "Email", type: "email", required: true },
-          {
-            name: "password",
-            label: "Password",
-            type: "password",
-            required: false,
-          },
         ]}
       />
       <DeleteModal

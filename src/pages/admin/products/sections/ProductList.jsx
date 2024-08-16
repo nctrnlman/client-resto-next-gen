@@ -6,9 +6,13 @@ import EditModal from "../../../../components/common/cards/EditModal";
 import DeleteModal from "../../../../components/common/cards/DeleteModal";
 import useFetchProducts from "../../../../hooks/useFetchProducts";
 import { toast } from "react-toastify";
+import useCategories from "../../../../hooks/useCategories";
+import { formatCurrencyToIDR } from "../../../../utils/formatters";
 
 const ProductList = () => {
   const { products, loading, error, refetch } = useFetchProducts();
+  const { categories } = useCategories();
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -76,7 +80,12 @@ const ProductList = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "product_name", headerName: "Name", width: 200 },
-    { field: "product_price", headerName: "Price", width: 150 },
+    {
+      field: "product_price",
+      headerName: "Price",
+      width: 150,
+      renderCell: (params) => formatCurrencyToIDR(params.value),
+    },
     {
       field: "category",
       headerName: "Category",
@@ -134,14 +143,14 @@ const ProductList = () => {
           },
           {
             name: "category_id",
-            label: "Category ID",
-            type: "number",
+            label: "Category",
+            type: "select",
             required: true,
           },
           {
             name: "description",
             label: "Description",
-            type: "text",
+            type: "textarea",
             required: false,
           },
           {
@@ -151,12 +160,18 @@ const ProductList = () => {
             required: false,
           },
         ]}
+        options={{
+          category_id: categories.map((category) => ({
+            value: category.id,
+            label: category.category_name,
+          })),
+        }}
       />
       <EditModal
         isOpen={isEditModalOpen}
         onClose={() => setEditModalOpen(false)}
         onSubmit={handleEditSubmit}
-        initialData={selectedProduct || {}}
+        initialData={selectedProduct}
         fields={[
           { name: "product_name", label: "Name", type: "text", required: true },
           {
@@ -167,14 +182,18 @@ const ProductList = () => {
           },
           {
             name: "category_id",
-            label: "Category ID",
-            type: "number",
+            label: "Category",
+            type: "select",
             required: true,
+            options: categories.map((category) => ({
+              value: category.id,
+              label: category.category_name,
+            })),
           },
           {
             name: "description",
             label: "Description",
-            type: "text",
+            type: "textarea",
             required: false,
           },
           {
@@ -189,7 +208,6 @@ const ProductList = () => {
         isOpen={isDeleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
         onConfirm={handleDeleteConfirm}
-        itemName={selectedProduct?.product_name || "Product"}
       />
     </div>
   );
