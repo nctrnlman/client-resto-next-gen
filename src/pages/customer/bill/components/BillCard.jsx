@@ -11,7 +11,7 @@ const BillCard = () => {
 
   useEffect(() => {
     if (user_id && no_table) {
-      dispatch(fetchOrders({ user_id, no_table }));
+      dispatch(fetchOrders({ user_id, no_table, status: "pending" }));
     }
   }, [dispatch, user_id, no_table]);
 
