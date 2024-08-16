@@ -45,31 +45,36 @@ const DataTable = ({ rows, columns, loading, onEdit, onDelete }) => {
     apiRef.current.autosizeColumns(autosizeOptions);
   }, [loading]);
 
-  const actionColumn = {
-    field: "actions",
-    headerName: "Actions",
-    width: 180,
-    renderCell: (params) => (
-      <div className="flex space-x-2 py-4">
-        {/* Edit Button */}
-        <button
-          onClick={() => onEdit(params.row)}
-          className="flex items-center justify-center bg-brand-500 text-white px-3 py-2 rounded hover:bg-brand-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400"
-          title="Edit"
-        >
-          <FaEdit className="text-lg" />
-        </button>
-        {/* Delete Button */}
-        <button
-          onClick={() => onDelete(params.row)}
-          className="flex items-center justify-center bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-400"
-          title="Delete"
-        >
-          <FaTrash className="text-lg" />
-        </button>
-      </div>
-    ),
-  };
+  const actionColumn =
+    onEdit || onDelete
+      ? {
+          field: "actions",
+          headerName: "Actions",
+          width: 180,
+          renderCell: (params) => (
+            <div className="flex space-x-2 py-4">
+              {onEdit && (
+                <button
+                  onClick={() => onEdit(params.row)}
+                  className="flex items-center justify-center bg-brand-500 text-white px-3 py-2 rounded hover:bg-brand-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  title="Edit"
+                >
+                  <FaEdit className="text-lg" />
+                </button>
+              )}
+              {onDelete && (
+                <button
+                  onClick={() => onDelete(params.row)}
+                  className="flex items-center justify-center bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-400"
+                  title="Delete"
+                >
+                  <FaTrash className="text-lg" />
+                </button>
+              )}
+            </div>
+          ),
+        }
+      : null;
   return (
     <div className="flex flex-col w-full">
       <div className="flex gap-4 items-center mb-4">
@@ -90,7 +95,7 @@ const DataTable = ({ rows, columns, loading, onEdit, onDelete }) => {
         <DataGrid
           autoHeight
           rows={pageRows}
-          columns={[...columns, actionColumn]}
+          columns={actionColumn ? [...columns, actionColumn] : columns}
           pageSize={pageSize}
           disableSelectionOnClick
           apiRef={apiRef}

@@ -21,7 +21,9 @@ const CartModal = ({ isOpen, onClose }) => {
     const fetchOrderStatus = async () => {
       try {
         const no_table = localStorage.getItem("tableId");
-        await dispatch(fetchOrders({ user_id: user.id, no_table })).unwrap();
+        await dispatch(
+          fetchOrders({ user_id: user.id, no_table, status: "pending" })
+        ).unwrap();
       } catch (err) {
         console.error("Failed to fetch orders:", err);
       }

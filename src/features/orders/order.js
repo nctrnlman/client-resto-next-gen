@@ -3,10 +3,17 @@ import axiosInstance from "../../utils/axiosInstance";
 
 export const fetchOrders = createAsyncThunk(
   "order/fetchOrders",
-  async ({ user_id, no_table }) => {
+  async ({ user_id, no_table, status }) => {
+    const params = { user_id, no_table };
+
+    if (status) {
+      params.status = status;
+    }
+
     const response = await axiosInstance.get("/orders", {
-      params: { user_id, no_table, status: "pending" },
+      params,
     });
+
     return response.data.data;
   }
 );
