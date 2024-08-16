@@ -8,7 +8,7 @@ function ProductsAdmin() {
         <div className="p-4">
           <DashboardBanner
             title="Products Page"
-            message="Hello! We're glad to have you here. Explore our wide range of products and manage your orders easily. If you need any help, feel free to reach out to our support team."
+            message="Welcome to the Products Page. Browse through our extensive collection of products, view detailed information, and manage your inventory seamlessly. For any assistance, our support team is here to help."
           />
         </div>
         <div className="px-4">

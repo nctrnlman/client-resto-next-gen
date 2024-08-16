@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid, useGridApiRef } from "@mui/x-data-grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import { FaSearch } from "react-icons/fa";
@@ -50,13 +50,13 @@ const DataTable = ({ rows, columns, loading, onEdit, onDelete }) => {
       ? {
           field: "actions",
           headerName: "Actions",
-          width: 180,
+          width: 200,
           renderCell: (params) => (
             <div className="flex space-x-2 py-4">
               {onEdit && (
                 <button
                   onClick={() => onEdit(params.row)}
-                  className="flex items-center justify-center bg-brand-500 text-white px-3 py-2 rounded hover:bg-brand-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="flex items-center justify-center bg-blue-500 text-white px-2 py-2 rounded-lg shadow-sm hover:bg-blue-600 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   title="Edit"
                 >
                   <FaEdit className="text-lg" />
@@ -65,7 +65,7 @@ const DataTable = ({ rows, columns, loading, onEdit, onDelete }) => {
               {onDelete && (
                 <button
                   onClick={() => onDelete(params.row)}
-                  className="flex items-center justify-center bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-400"
+                  className="flex items-center justify-center bg-red-500 text-white px-2 py-2 rounded-lg shadow-sm hover:bg-red-600 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400"
                   title="Delete"
                 >
                   <FaTrash className="text-lg" />
