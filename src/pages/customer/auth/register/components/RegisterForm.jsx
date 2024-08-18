@@ -1,3 +1,6 @@
+import React from "react";
+import { motion } from "framer-motion";
+
 const RegisterForm = ({
   name,
   setName,
@@ -5,15 +8,27 @@ const RegisterForm = ({
   setEmail,
   password,
   setPassword,
+  noWhatsapp,
+  setNoWhatsapp,
   errors,
   handleSubmit,
 }) => {
   return (
-    <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-      <div>
+    <motion.form
+      className="space-y-6"
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
         <label
           htmlFor="name"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block text-sm font-medium text-gray-700"
         >
           Your name
         </label>
@@ -21,39 +36,95 @@ const RegisterForm = ({
           type="text"
           name="name"
           id="name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-600 focus:border-brand-600 block w-full p-2.5"
+          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
           placeholder="Your Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         {errors.name && (
-          <div className="text-red-500 text-sm">{errors.name}</div>
+          <motion.p
+            className="mt-2 text-sm text-red-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {errors.name}
+          </motion.p>
         )}
-      </div>
-      <div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+      >
         <label
           htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block text-sm font-medium text-gray-700"
         >
-          Your email
+          Email address
         </label>
         <input
-          type="text"
+          type="email"
           name="email"
           id="email"
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-600 focus:border-brand-600 block w-full p-2.5"
-          placeholder="name@company.com"
+          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+          placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         {errors.email && (
-          <div className="text-red-500 text-sm">{errors.email}</div>
+          <motion.p
+            className="mt-2 text-sm text-red-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {errors.email}
+          </motion.p>
         )}
-      </div>
-      <div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+      >
+        <label
+          htmlFor="whatsapp"
+          className="block text-sm font-medium text-gray-700"
+        >
+          WhatsApp number
+        </label>
+        <input
+          type="tel"
+          name="whatsapp"
+          id="whatsapp"
+          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+          placeholder="1234567890"
+          value={noWhatsapp}
+          onChange={(e) => setNoWhatsapp(e.target.value)}
+          required
+        />
+        {errors.noWhatsapp && (
+          <motion.p
+            className="mt-2 text-sm text-red-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {errors.noWhatsapp}
+          </motion.p>
+        )}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+      >
         <label
           htmlFor="password"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block text-sm font-medium text-gray-700"
         >
           Password
         </label>
@@ -61,23 +132,36 @@ const RegisterForm = ({
           type="password"
           name="password"
           id="password"
+          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
           placeholder="••••••••"
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-600 focus:border-brand-600 block w-full p-2.5"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         {errors.password && (
-          <div className="text-red-500 text-sm">{errors.password}</div>
+          <motion.p
+            className="mt-2 text-sm text-red-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {errors.password}
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <button
-        type="submit"
-        className="w-full text-white bg-teal-500 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-brand-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
       >
-        Register
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+          Register
+        </button>
+      </motion.div>
+    </motion.form>
   );
 };
 

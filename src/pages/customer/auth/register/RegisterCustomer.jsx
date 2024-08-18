@@ -1,3 +1,4 @@
+import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useRegisterForm from "../../../../hooks/useRegisterForm";
@@ -5,6 +6,8 @@ import RegisterForm from "./components/RegisterForm";
 import icon from "../../../../assets/logo/garden-logo.png";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import bgregister from "../../../../assets/background/bg-login.jpg";
+import { motion } from "framer-motion";
 
 function RegisterCustomer() {
   const {
@@ -14,6 +17,8 @@ function RegisterCustomer() {
     setEmail,
     password,
     setPassword,
+    noWhatsapp,
+    setNoWhatsapp,
     role,
     errors,
     validate,
@@ -28,57 +33,105 @@ function RegisterCustomer() {
           name,
           email,
           password,
+          no_whatsapp: noWhatsapp,
           role: role || "2",
         });
 
         toast.success(response.data.message);
         navigate("/login");
       } catch (error) {
-        toast.error(error.response?.data?.message || error.message);
+        toast.error(
+          error.response?.data?.message ||
+            "An error occurred during registration"
+        );
       }
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
-    <div>
-      <section className="bg-gray-50">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
+    <div
+      className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+      style={{
+        backgroundImage: `url(${bgregister})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <motion.div
+        className="max-w-md w-full space-y-8 bg-white bg-opacity-90 p-10 rounded-xl shadow-2xl"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <div className="text-center">
+          <motion.img
+            className="mx-auto h-24 w-auto"
+            src={icon}
+            alt="Garden Sky Restaurant"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          />
+          <motion.h2
+            className="mt-6 text-3xl font-extrabold text-gray-900"
+            variants={itemVariants}
           >
-            <img className="h-44 mr-2" src={icon} alt="logo" />
-          </a>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                Register your account
-              </h1>
-              <RegisterForm
-                name={name}
-                setName={setName}
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                errors={errors}
-                handleSubmit={handleSubmit}
-              />
-              <div className="flex flex-col items-center mt-6">
-                <p className="mt-4 text-sm text-gray-600">
-                  Already have an account?
-                  <a
-                    href="/login"
-                    className="text-teal-500 pl-2 hover:underline"
-                  >
-                    Login
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
+            Create your account
+          </motion.h2>
+          <motion.p
+            className="mt-2 text-sm text-gray-600"
+            variants={itemVariants}
+          >
+            Join Garden Sky Restaurant
+          </motion.p>
         </div>
-      </section>
+        <RegisterForm
+          name={name}
+          setName={setName}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          noWhatsapp={noWhatsapp}
+          setNoWhatsapp={setNoWhatsapp}
+          errors={errors}
+          handleSubmit={handleSubmit}
+        />
+        <motion.div className="text-center" variants={itemVariants}>
+          <p className="mt-2 text-sm text-gray-600">
+            Already have an account?
+            <a
+              href="/login"
+              className="font-medium text-green-600 hover:text-green-500 ml-2 transition-colors duration-300"
+            >
+              Log in here
+            </a>
+          </p>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
