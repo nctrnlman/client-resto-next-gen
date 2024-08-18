@@ -2,12 +2,25 @@ import { useState } from "react";
 import * as Yup from "yup";
 
 const useLoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [emailOrWhatsapp, setEmailOrWhatsapp] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email address").required("Required"),
+    emailOrWhatsapp: Yup.string()
+      .test(
+        "email-or-phone",
+        "Enter a valid email or WhatsApp number",
+        (value) => {
+          return (
+            Yup.string().email().isValidSync(value) ||
+            Yup.string()
+              .matches(/^\d+$/, "Must be only digits")
+              .isValidSync(value)
+          );
+        }
+      )
+      .required("Email or WhatsApp number is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Required"),
@@ -16,7 +29,7 @@ const useLoginForm = () => {
   const validate = async () => {
     try {
       await validationSchema.validate(
-        { email, password },
+        { emailOrWhatsapp, password },
         { abortEarly: false }
       );
       setErrors({});
@@ -32,8 +45,8 @@ const useLoginForm = () => {
   };
 
   return {
-    email,
-    setEmail,
+    emailOrWhatsapp,
+    setEmailOrWhatsapp,
     password,
     setPassword,
     errors,
