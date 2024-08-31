@@ -11,6 +11,7 @@ function DashboardCustomer() {
           <DashboardBanner
             title="Welcome to Our Resto"
             message="Hello! We're glad to have you here. Explore our wide range of products and manage your orders easily. If you need any help, feel free to reach out to our support team."
+            page="home"
           />
         </div>
         <div>
