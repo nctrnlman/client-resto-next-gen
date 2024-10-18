@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 const CategoryCard = ({ category }) => {
   const navigate = useNavigate();
 
+  // Fungsi untuk menangani klik pada tombol 'See Products'
   const handleSeeProductsClick = () => {
-    navigate(`/?categoryId=${category.id}`);
+    navigate(`/?categoryId=${category.id}`); // Menavigasi ke halaman produk dengan ID kategori yang dipilih
   };
 
   return (
@@ -15,12 +16,13 @@ const CategoryCard = ({ category }) => {
         className="w-full h-48 object-cover rounded-t-lg"
       />
       <div className="p-4">
-        <h2 className="text-xl font-bold">{category.category_name}</h2>
+        <h2 className="text-xl font-bold">{category.category_name}</h2>{" "}
+        {/* Menampilkan nama kategori */}
         <button
           onClick={handleSeeProductsClick}
           className="mt-2 px-4 py-2 bg-teal-500 text-white rounded-lg"
         >
-          See Products
+          See Products{/* Teks pada tombol */}
         </button>
       </div>
     </div>

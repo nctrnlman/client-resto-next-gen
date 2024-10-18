@@ -3,13 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import garden from "../../../assets/logo/garden-logo.png";
 
 const SidebarCustomer = ({ isOpen, onClose }) => {
-  const location = useLocation();
-  const [activePage, setActivePage] = useState("");
+  const location = useLocation(); // Mendapatkan lokasi saat ini dari React Router
+  const [activePage, setActivePage] = useState(""); // State untuk melacak halaman aktif
 
+  // Memperbarui halaman aktif saat lokasi berubah
   useEffect(() => {
     setActivePage(location.pathname);
   }, [location.pathname]);
 
+  // Mendefinisikan halaman yang tersedia di sidebar
   const pages = [
     { path: "/", icon: DashboardIcon, title: "Home" },
     {
@@ -24,6 +26,7 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
     },
   ];
 
+  // Komponen ikon SVG
   function DashboardIcon() {
     return (
       <svg
@@ -40,6 +43,7 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
     );
   }
 
+  // Komponen ikon SVG
   function BillIcon() {
     return (
       <svg
@@ -56,6 +60,7 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
     );
   }
 
+  // Komponen ikon SVG
   function CategoryIcon() {
     return (
       <svg
@@ -82,7 +87,7 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           className="fixed inset-0 z-20 bg-gray-600 bg-opacity-50 sm:hidden"
-          onClick={onClose}
+          onClick={onClose} // Menutup sidebar saat klik di luar
         ></div>
       )}
       <aside
@@ -103,7 +108,7 @@ const SidebarCustomer = ({ isOpen, onClose }) => {
                   className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group ${
                     activePage === page.path ? "font-bold bg-gray-200" : ""
                   }`}
-                  onClick={() => handlePageClick(page.path)}
+                  onClick={() => handlePageClick(page.path)} // Menangani klik pada tautan
                 >
                   <page.icon />
                   {isOpen && <span className="ms-3">{page.title}</span>}

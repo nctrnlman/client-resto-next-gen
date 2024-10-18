@@ -3,13 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import garden from "../../../assets/logo/garden-logo.png";
 
 const SidebarAdmin = ({ isOpen, onClose }) => {
-  const location = useLocation();
-  const [activePage, setActivePage] = useState("");
+  const location = useLocation(); // Mendapatkan lokasi saat ini dari React Router
+  const [activePage, setActivePage] = useState(""); // State untuk melacak halaman aktif
 
+  // Memperbarui halaman aktif saat lokasi berubah
   useEffect(() => {
     setActivePage(location.pathname);
   }, [location.pathname]);
 
+  // Mendefinisikan halaman yang tersedia di sidebar
   const pages = [
     { path: "/admin/home", icon: DashboardIcon, title: "Home" },
     {
@@ -25,6 +27,7 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
     },
   ];
 
+  // Komponen ikon SVG untuk Home
   function DashboardIcon({ activePage }) {
     return (
       <svg
@@ -41,6 +44,7 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
     );
   }
 
+  // Komponen ikon SVG untuk Users
   function UsersIcon({ activePage }) {
     return (
       <svg
@@ -57,6 +61,7 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
     );
   }
 
+  // Komponen ikon SVG untuk Products
   function ProductsIcon({ activePage }) {
     return (
       <svg
@@ -73,6 +78,7 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
     );
   }
 
+  // Komponen ikon SVG untuk Transactions
   function TransactionIcon({ activePage }) {
     return (
       <svg
@@ -91,6 +97,7 @@ const SidebarAdmin = ({ isOpen, onClose }) => {
     );
   }
 
+  // Fungsi untuk menangani klik pada halaman
   const handlePageClick = (pagePath) => {
     setActivePage(pagePath);
     onClose();

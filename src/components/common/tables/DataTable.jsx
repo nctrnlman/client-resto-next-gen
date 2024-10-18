@@ -6,14 +6,16 @@ import { Pagination } from "@mui/material";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const DataTable = ({ rows, columns, loading, onEdit, onDelete }) => {
-  const [filterText, setFilterText] = useState("");
-  const [includeOutliers, setIncludeOutliers] = useState(true);
-  const apiRef = useGridApiRef();
+  const [filterText, setFilterText] = useState(""); // State untuk menyimpan teks filter pencarian
+  const [includeOutliers, setIncludeOutliers] = useState(true); // State untuk menyimpan pilihan termasuk outliers
+  const apiRef = useGridApiRef(); // Membuat referensi untuk API DataGrid
 
+  // Fungsi untuk menangani perubahan teks filter
   const handleFilterChange = (event) => {
     setFilterText(event.target.value);
   };
 
+  // Memfilter rows berdasarkan filterText
   const filteredRows = Array.isArray(rows)
     ? rows.filter((row) =>
         Object.keys(row).some(
@@ -22,29 +24,34 @@ const DataTable = ({ rows, columns, loading, onEdit, onDelete }) => {
             row[field].toLowerCase().includes(filterText.toLowerCase())
         )
       )
-    : [];
+    : []; // Mengembalikan array kosong jika rows bukan array
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); // State untuk menyimpan nomor halaman saat ini
+
+  // Fungsi untuk menangani perubahan halaman
   const handleChangePage = (event, value) => {
     setPage(value);
   };
 
+  // Opsi untuk autosizing kolom
   const autosizeOptions = {
     includeHeaders: true,
     includeOutliers,
   };
 
-  const pageSize = 10;
-  const pageStartIndex = (page - 1) * pageSize;
-  const pageEndIndex = pageStartIndex + pageSize;
-  const pageRows = filteredRows.slice(pageStartIndex, pageEndIndex);
+  const pageSize = 10; // Jumlah item per halaman
+  const pageStartIndex = (page - 1) * pageSize; // Indeks awal halaman
+  const pageEndIndex = pageStartIndex + pageSize; // Indeks akhir halaman
+  const pageRows = filteredRows.slice(pageStartIndex, pageEndIndex); // Mengambil rows sesuai dengan halaman saat ini
 
-  const totalPages = Math.ceil(filteredRows.length / pageSize);
+  const totalPages = Math.ceil(filteredRows.length / pageSize); // Menghitung total halaman
 
+  // Menggunakan useEffect untuk melakukan autosizing kolom saat loading
   useEffect(() => {
-    apiRef.current.autosizeColumns(autosizeOptions);
+    apiRef.current.autosizeColumns(autosizeOptions); // Mengatur ukuran kolom secara otomatis
   }, [loading]);
 
+  // Kolom aksi untuk Edit dan Delete
   const actionColumn =
     onEdit || onDelete
       ? {

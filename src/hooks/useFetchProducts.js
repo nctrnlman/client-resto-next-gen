@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
 const useFetchProducts = () => {
+  // Menggunakan state untuk menyimpan nilai dari input form
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,9 +14,9 @@ const useFetchProducts = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       if (response.data.status === "success") {
-        setProducts(response.data.data);
+        setProducts(response.data.data); // Menyimpan data produk jika berhasil
       } else {
-        setError(response.data.message || "Failed to fetch products");
+        setError(response.data.message || "Failed to fetch products"); // Menyimpan pesan error jika tidak berhasil
       }
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch products");
@@ -24,6 +25,7 @@ const useFetchProducts = () => {
     }
   };
 
+  // Memanggil fetchProducts saat komponen dimuat
   useEffect(() => {
     fetchProducts();
   }, []);

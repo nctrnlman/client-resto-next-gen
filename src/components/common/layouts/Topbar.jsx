@@ -6,21 +6,25 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Topbar = ({ toggleSidebar }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State untuk kontrol dropdown menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State untuk kontrol menu sidebar
+  const navigate = useNavigate(); // Hook untuk navigasi
+  const location = useLocation(); // Hook untuk mendapatkan lokasi saat ini
 
-  const userData = useSelector((state) => state.user.User);
+  const userData = useSelector((state) => state.user.User); // Mengambil data pengguna dari Redux state
 
+  // Fungsi untuk toggling dropdown menu
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // Fungsi untuk menangani proses logout
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("token"); // Menghapus token dari localStorage
     toast.success("Logout success");
     setIsDropdownOpen(false);
+
+    // Navigasi berdasarkan lokasi saat ini
     if (location.pathname.includes("admin")) {
       navigate("/admin/login");
     } else {
@@ -28,6 +32,7 @@ const Topbar = ({ toggleSidebar }) => {
     }
   };
 
+  // Fungsi untuk toggling sidebar
   const handleToggleSidebar = () => {
     setIsMenuOpen(!isMenuOpen);
     toggleSidebar();

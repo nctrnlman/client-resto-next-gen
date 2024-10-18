@@ -19,19 +19,21 @@ import RegisterCustomer from "./pages/customer/auth/register/RegisterCustomer";
 import BillCustomer from "./pages/customer/bill/BillCustomer";
 
 function App() {
-  const location = useLocation();
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.User);
+  const location = useLocation(); // Mendapatkan lokasi saat ini dari URL
+  const [isCartOpen, setIsCartOpen] = useState(false); // State untuk mengontrol visibilitas modal keranjang
+  const dispatch = useDispatch(); // Menginisialisasi dispatch dari Redux
+  const user = useSelector((state) => state.user.User); // Mengambil data pengguna dari Redux store
 
+  // Mengambil detail pengguna saat komponen pertama kali dimuat
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token"); // Mengambil token dari local storage
 
+    // Jika token ada dan data pengguna belum diambil
     if (token && user.length === 0) {
       const fetchUser = async () => {
         try {
-          const userData = await fetchUserDetail(token);
-          dispatch(setUser(userData.data));
+          const userData = await fetchUserDetail(token); // Mengambil data pengguna
+          dispatch(setUser(userData.data)); // Menyimpan data pengguna ke Redux store
         } catch (error) {
           console.error("Error fetching user data:", error.message);
         }
@@ -39,12 +41,14 @@ function App() {
 
       fetchUser();
     }
-  }, [dispatch, user]);
+  }, [dispatch, user]); // Menjalankan efek ini saat dispatch atau user berubah
 
+  // Mengatur fungsi untuk membuka modal keranjang
   const handleCartIconClick = () => {
     setIsCartOpen(true);
   };
 
+  // Mengatur fungsi untuk menutup modal keranjang
   const handleCloseCartModal = () => {
     setIsCartOpen(false);
   };

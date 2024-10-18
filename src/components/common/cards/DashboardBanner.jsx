@@ -4,12 +4,13 @@ import { LayoutList } from "lucide-react"; // Ganti Category dengan LayoutList
 import { Receipt } from "lucide-react";
 
 const DashboardBanner = ({ title, message, page }) => {
+  // Fungsi untuk memilih ikon berdasarkan halaman
   const getIcon = () => {
     switch (page) {
       case "home":
         return <Home className="h-12 w-12 md:h-16 md:w-16 text-white" />;
       case "categories":
-        return <LayoutList className="h-12 w-12 md:h-16 md:w-16 text-white" />; // Menggunakan LayoutList
+        return <LayoutList className="h-12 w-12 md:h-16 md:w-16 text-white" />;
       case "bill":
         return <Receipt className="h-12 w-12 md:h-16 md:w-16 text-white" />;
       default:
@@ -25,21 +26,21 @@ const DashboardBanner = ({ title, message, page }) => {
       className="bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg shadow-lg overflow-hidden"
     >
       <div className="relative p-6 md:p-8">
-        <motion.h1
+        <motion.h1 // Animasi untuk judul
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
           className="text-3xl md:text-4xl font-bold mb-4 font-serif"
         >
-          {title}
+          {title} {/* Menampilkan judul dari props */}
         </motion.h1>
-        <motion.p
+        <motion.p // Animasi untuk pesan
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
           className="text-lg md:text-xl max-w-3xl"
         >
-          {message}
+          {message} {/* Menampilkan pesan dari props */}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, scale: 0 }}

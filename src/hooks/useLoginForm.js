@@ -2,10 +2,12 @@ import { useState } from "react";
 import * as Yup from "yup";
 
 const useLoginForm = () => {
+  // Menggunakan state untuk menyimpan nilai dari input form
   const [emailOrWhatsapp, setEmailOrWhatsapp] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
+  // Schema validasi menggunakan Yup
   const validationSchema = Yup.object().shape({
     emailOrWhatsapp: Yup.string()
       .test(
@@ -26,6 +28,7 @@ const useLoginForm = () => {
       .required("Required"),
   });
 
+  // Fungsi untuk melakukan validasi
   const validate = async () => {
     try {
       await validationSchema.validate(

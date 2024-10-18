@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 
 const CartIcon = ({ onClick }) => {
+  // Mengambil items dari state cart menggunakan useSelector
   const cartItems = useSelector((state) => state.cart.items);
+  // Menghitung total jumlah item dalam keranjang
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -14,7 +16,7 @@ const CartIcon = ({ onClick }) => {
       <FaShoppingCart size={24} />
       {itemCount > 0 && (
         <span className="ml-2 text-sm bg-white text-teal-500 rounded-full px-2">
-          {itemCount}
+          {itemCount} {/* Menampilkan total jumlah item */}
         </span>
       )}
     </div>

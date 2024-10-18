@@ -4,39 +4,42 @@ import axiosInstance from "../../utils/axiosInstance";
 export const fetchOrders = createAsyncThunk(
   "order/fetchOrders",
   async ({ user_id, no_table, status }) => {
-    const params = { user_id, no_table };
+    // Parameter input untuk fungsi async
+    const params = { user_id, no_table }; // Membuat objek parameter untuk permintaan
 
+    // Menambahkan status ke parameter jika ada
     if (status) {
       params.status = status;
     }
-
+    // Melakukan permintaan GET untuk mengambil data pesanan
     const response = await axiosInstance.get("/orders", {
-      params,
+      params, // Mengirim parameter sebagai query string
     });
 
-    return response.data.data;
+    return response.data.data; // Mengembalikan data pesanan dari response
   }
 );
 
 const orderSlice = createSlice({
   name: "order",
   initialState: {
-    orders: [],
+    orders: [], // State untuk menyimpan daftar pesanan
     status: "idle",
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
+    // Mengelola state berdasarkan status fetch
     builder
       .addCase(fetchOrders.pending, (state) => {
-        state.status = "loading";
+        state.status = "loading"; // Mengatur status menjadi loading saat permintaan dimulai
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = "succeeded"; // Mengatur status menjadi succeeded saat permintaan berhasil
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = "failed"; // Mengatur status menjadi failed saat permintaan gagal
         state.error = action.error.message;
       });
   },

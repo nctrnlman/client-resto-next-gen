@@ -2,25 +2,28 @@ import { useState } from "react";
 import createValidationSchema from "../../../utils/validationSchema";
 
 const AddModal = ({ isOpen, onClose, onSubmit, fields, options }) => {
+  // Inisialisasi state untuk menyimpan data formulir dan error
   const [formData, setFormData] = useState(
-    fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
+    fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {}) // Membuat objek dengan nama field sebagai key dan value sebagai string kosong
   );
   const [errors, setErrors] = useState({});
 
-  const validationSchema = createValidationSchema(fields);
+  const validationSchema = createValidationSchema(fields); // Membuat skema validasi berdasarkan fields
 
+  // Fungsi untuk menangani perubahan input
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value }); // Memperbarui state formData
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
+  // Fungsi untuk menangani pengiriman formulir
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah pengiriman default formulir
     try {
-      await validationSchema.validate(formData, { abortEarly: false });
-      onSubmit(formData);
+      await validationSchema.validate(formData, { abortEarly: false }); // Validasi data menggunakan skema
+      onSubmit(formData); // Panggil fungsi onSubmit dengan data formulir
       setFormData(
-        fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
+        fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {}) // Reset formData setelah submit
       );
       setErrors({});
     } catch (validationErrors) {
@@ -35,7 +38,7 @@ const AddModal = ({ isOpen, onClose, onSubmit, fields, options }) => {
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) return null; // Jika modal tidak terbuka, tidak mengembalikan apa-apa
 
   return (
     <div
@@ -51,11 +54,11 @@ const AddModal = ({ isOpen, onClose, onSubmit, fields, options }) => {
               <label htmlFor={field.name} className="block text-sm font-medium">
                 {field.label}
               </label>
-              {field.type === "select" ? (
+              {field.type === "select" ? ( // Menentukan tipe input berdasarkan field
                 <select
                   name={field.name}
                   value={formData[field.name]}
-                  onChange={handleChange}
+                  onChange={handleChange} // Fungsi handleChange dipanggil saat ada perubahan
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 >
                   <option value="">Select {field.label}</option>
