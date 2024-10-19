@@ -12,15 +12,16 @@ import {
 } from "../../../../utils/formatters";
 
 const TransactionList = () => {
-  const dispatch = useDispatch();
-  const { orders, status, error } = useSelector((state) => state.order);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [isDetailModalOpen, setDetailModalOpen] = useState(false);
-  const [isStatusModalOpen, setStatusModalOpen] = useState(false);
+  const dispatch = useDispatch(); // Mendapatkan fungsi dispatch dari Redux
+  const { orders, status, error } = useSelector((state) => state.order); // Mengambil data pesanan, status, dan error dari state Redux
+  const [selectedOrder, setSelectedOrder] = useState(null); // Menyimpan pesanan yang dipilih
+  const [isDetailModalOpen, setDetailModalOpen] = useState(false); // Menyimpan status apakah modal detail terbuka
+  const [isStatusModalOpen, setStatusModalOpen] = useState(false); // Menyimpan status apakah modal update status terbuka
 
   useEffect(() => {
+    // Mengambil data pesanan saat komponen dimuat
     dispatch(fetchOrders({ user_id: null, no_table: null }));
-  }, [dispatch]);
+  }, [dispatch]); // Menjalankan efek ini hanya ketika dispatch berubah
 
   const handleViewDetails = (order) => {
     setSelectedOrder(order);
@@ -33,16 +34,17 @@ const TransactionList = () => {
   };
 
   const handleStatusUpdateSubmit = async (updatedStatus) => {
+    // Menangani pengiriman pembaruan status pesanan
     try {
       const response = await axiosInstance.put(
-        `/orders/${selectedOrder.id}`,
-        { status: updatedStatus },
+        `/orders/${selectedOrder.id}`, // Endpoint untuk memperbarui status pesanan
+        { status: updatedStatus }, // Data yang akan dikirim
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      dispatch(fetchOrders({ user_id: null, no_table: null }));
-      setStatusModalOpen(false);
+      dispatch(fetchOrders({ user_id: null, no_table: null })); // Mengambil ulang data pesanan setelah pembaruan
+      setStatusModalOpen(false); // Menutup modal setelah berhasil
       toast.success(response.data.message);
     } catch (error) {
       console.error("Failed to update order status:", error);
@@ -52,6 +54,7 @@ const TransactionList = () => {
     }
   };
 
+  // Definisi kolom untuk DataTable
   const columns = [
     { field: "id", headerName: "Order ID", width: 100 },
     { field: "user_id", headerName: "Customer Name", width: 150 },
@@ -112,7 +115,7 @@ const TransactionList = () => {
       ),
     },
   ];
-
+  // Menangani kondisi error
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -123,29 +126,31 @@ const TransactionList = () => {
       <DataTable
         rows={orders.map((order) => ({
           id: order.id,
-          user_id: order.user.name,
+          user_id: order.user.name, // Mengambil nama pengguna dari data pesanan
           no_table: order.no_table,
           status: order.status,
           total_price: order.total_price,
           createdAt: order.createdAt,
           updatedAt: order.updatedAt,
-          orderDetails: order.OrderDetails,
-          users: order.user,
+          orderDetails: order.OrderDetails, // Mengambil detail pesanan
+          users: order.user, // Menyimpan data pengguna
         }))}
-        columns={columns}
-        loading={status === "loading"}
+        columns={columns} // Menggunakan kolom yang telah didefinisikan
+        loading={status === "loading"} // Menampilkan loading jika statusnya loading
       />
 
+      {/* Modal untuk menampilkan detail transaksi */}
       <DetailTransactionModal
         isOpen={isDetailModalOpen}
-        onClose={() => setDetailModalOpen(false)}
-        order={selectedOrder || {}}
+        onClose={() => setDetailModalOpen(false)} // Menutup modal detail
+        order={selectedOrder || {}} // Mengirimkan data pesanan yang dipilih
       />
+      {/* Modal untuk memperbarui status pesanan */}
       <UpdateStatusModal
         isOpen={isStatusModalOpen}
-        onClose={() => setStatusModalOpen(false)}
-        onSubmit={handleStatusUpdateSubmit}
-        currentStatus={selectedOrder?.status || ""}
+        onClose={() => setStatusModalOpen(false)} // Menutup modal update status
+        onSubmit={handleStatusUpdateSubmit} // Mengirimkan fungsi pembaruan status
+        currentStatus={selectedOrder?.status || ""} // Mengirimkan status saat ini
       />
     </div>
   );

@@ -2,16 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const RegisterForm = ({
-  name,
-  setName,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  noWhatsapp,
-  setNoWhatsapp,
-  errors,
-  handleSubmit,
+  name, // Nama pengguna
+  setName, // Fungsi untuk mengubah nama
+  email, // Email pengguna
+  setEmail, // Fungsi untuk mengubah email
+  password, // Password pengguna
+  setPassword, // Fungsi untuk mengubah password
+  noWhatsapp, // Nomor WhatsApp pengguna
+  setNoWhatsapp, // Fungsi untuk mengubah nomor WhatsApp
+  errors, // Objek untuk menyimpan pesan kesalahan
+  handleSubmit, // Fungsi untuk menangani saat form disubmit
 }) => {
   return (
     <motion.form

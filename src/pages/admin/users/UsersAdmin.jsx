@@ -1,9 +1,13 @@
 import DashboardBanner from "../../../components/common/cards/DashboardBanner";
 import Layout from "../../../components/common/layouts/LayoutAdmin";
 import UserList from "./sections/UserList";
+
+// Komponen utama untuk halaman admin pengguna
 function UsersAdmin() {
   return (
     <Layout>
+      {" "}
+      {/* Menggunakan LayoutAdmin sebagai wrapper utama */}
       <main className="flex flex-col gap-4 ">
         <div className="p-4">
           <DashboardBanner
@@ -12,7 +16,7 @@ function UsersAdmin() {
           />
         </div>
         <div className="px-4">
-          <UserList />
+          <UserList /> {/* Menampilkan daftar pengguna */}
         </div>
       </main>
     </Layout>

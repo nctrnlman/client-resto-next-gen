@@ -9,21 +9,26 @@ import { toast } from "react-toastify";
 import useCategories from "../../../../hooks/useCategories";
 import { formatCurrencyToIDR } from "../../../../utils/formatters";
 
+// Mendefinisikan komponen ProductList
 const ProductList = () => {
+  // Mengambil data produk dan status loading/error dari hook useFetchProducts
   const { products, loading, error, refetch } = useFetchProducts();
+  // Mengambil kategori dari hook useCategories
   const { categories } = useCategories();
 
+  // State untuk produk yang dipilih dan status modal
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
+  // Fungsi untuk menambahkan produk
   const handleAddProduct = async (newProduct) => {
     try {
       const response = await axiosInstance.post("/products", newProduct, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      refetch();
+      refetch(); // Memperbarui daftar produk
       setAddModalOpen(false);
       toast.success(response.data.message);
     } catch (error) {
@@ -32,26 +37,29 @@ const ProductList = () => {
     }
   };
 
+  // Fungsi untuk mengatur produk yang dipilih untuk diedit
   const handleEdit = (product) => {
     setSelectedProduct(product);
     setEditModalOpen(true);
   };
 
+  // Fungsi untuk mengatur produk yang dipilih untuk dihapus
   const handleDelete = (product) => {
     setSelectedProduct(product);
     setDeleteModalOpen(true);
   };
 
+  // Fungsi untuk mengirimkan perubahan produk yang diedit
   const handleEditSubmit = async (updatedProduct) => {
     try {
       const response = await axiosInstance.put(
-        `/products/${selectedProduct.id}`,
+        `/products/${selectedProduct.id}`, // Mengupdate produk berdasarkan ID
         updatedProduct,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      refetch();
+      refetch(); // Memperbarui daftar produk
       setEditModalOpen(false);
       toast.success(response.data.message);
     } catch (error) {
@@ -60,10 +68,11 @@ const ProductList = () => {
     }
   };
 
+  // Fungsi untuk mengonfirmasi penghapusan produk
   const handleDeleteConfirm = async () => {
     try {
       const response = await axiosInstance.delete(
-        `/products/${selectedProduct.id}`,
+        `/products/${selectedProduct.id}`, // Menghapus produk berdasarkan ID
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -77,6 +86,7 @@ const ProductList = () => {
     }
   };
 
+  // Mendefinisikan kolom-kolom untuk DataTable
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "product_name", headerName: "Name", width: 200 },

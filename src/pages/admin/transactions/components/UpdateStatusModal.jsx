@@ -2,14 +2,19 @@ import { useState, useEffect } from "react";
 
 const UpdateStatusModal = ({ isOpen, onClose, onSubmit, currentStatus }) => {
   const [status, setStatus] = useState(currentStatus);
+
+  // Menggunakan useEffect untuk memperbarui status ketika currentStatus berubah
   useEffect(() => {
-    setStatus(currentStatus);
-  }, [currentStatus]);
+    setStatus(currentStatus); // Mengupdate status ketika currentStatus berubah
+  }, [currentStatus]); // Dependensi: currentStatus
+
+  // Jika modal tidak terbuka, kembalikan null
 
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    onSubmit(status);
+    // Menangani pengiriman status yang diperbarui
+    onSubmit(status); // Memanggil fungsi onSubmit dengan status baru
   };
 
   return (

@@ -11,6 +11,7 @@ import { setUser } from "../../../../features/users/user";
 import bglogin from "../../../../assets/background/bg-login.jpg";
 
 function LoginCustomer() {
+  // Menggunakan hook kustom untuk mendapatkan dan mengelola state form login
   const {
     emailOrWhatsapp,
     setEmailOrWhatsapp,
@@ -22,19 +23,21 @@ function LoginCustomer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Fungsi untuk menangani pengiriman form login
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (await validate()) {
       try {
+        // Melakukan permintaan login ke server
         const response = await axiosInstance.post("/auth/login", {
           emailOrWhatsapp,
           password,
         });
 
-        toast.success(response.data.message);
-        localStorage.setItem("token", response.data.data.token);
-        dispatch(setUser(response.data.data.user));
-        navigate("/");
+        toast.success(response.data.message); // Menampilkan notifikasi sukses
+        localStorage.setItem("token", response.data.data.token); // Menyimpan token ke localStorage
+        dispatch(setUser(response.data.data.user)); // Menyimpan data pengguna ke Redux store
+        navigate("/"); // Mengarahkan pengguna ke halaman utama setelah login berhasil
       } catch (error) {
         toast.error(
           error.response?.data?.message || "An error occurred during login"
@@ -64,12 +67,12 @@ function LoginCustomer() {
           </h2>
         </div>
         <LoginForm
-          emailOrWhatsapp={emailOrWhatsapp}
-          setEmailOrWhatsapp={setEmailOrWhatsapp}
-          password={password}
-          setPassword={setPassword}
-          errors={errors}
-          handleSubmit={handleSubmit}
+          emailOrWhatsapp={emailOrWhatsapp} // Mengoper state email/WhatsApp ke komponen LoginForm
+          setEmailOrWhatsapp={setEmailOrWhatsapp} // Mengoper fungsi untuk mengatur email/WhatsApp
+          password={password} // Mengoper state password ke komponen LoginForm
+          setPassword={setPassword} // Mengoper fungsi untuk mengatur password
+          errors={errors} // Mengoper pesan kesalahan ke komponen LoginForm
+          handleSubmit={handleSubmit} // Mengoper fungsi untuk menangani submit form
         />
         <div className="text-center">
           <p className="mt-2 text-sm text-gray-600">

@@ -5,23 +5,27 @@ import useCategories from "../../../../hooks/useCategories";
 import ProductCard from "../../../../components/common/cards/ProductCard";
 import { useLocation } from "react-router-dom";
 
+// Membuat hook kustom untuk mendapatkan parameter query dari URL
 const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
+  return new URLSearchParams(useLocation().search); // Mengembalikan parameter query dari URL
 };
 
+// Mendefinisikan komponen ProductList
 function ProductList() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Mendapatkan fungsi dispatch dari Redux
   const { products, productStatus, error } = useSelector(
-    (state) => state.products
+    (state) => state.products // Mengambil state produk dari Redux
   );
-  const { categories, status: categoriesStatus } = useCategories();
+  const { categories, status: categoriesStatus } = useCategories(); // Mengambil kategori dan statusnya
 
-  const query = useQuery();
-  const initialCategoryId = query.get("categoryId") || "";
+  const query = useQuery(); // Menggunakan hook kustom untuk mendapatkan parameter query
+  const initialCategoryId = query.get("categoryId") || ""; // Mengambil categoryId dari query, default ke string kosong jika tidak ada
 
+  // State untuk kategori yang dipilih dan istilah pencarian
   const [selectedCategory, setSelectedCategory] = useState(initialCategoryId);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Effect untuk mengatur kategori yang dipilih saat komponen pertama kali dimuat
   useEffect(() => {
     dispatch(fetchProducts({ category: selectedCategory, search: searchTerm }));
   }, [selectedCategory, searchTerm, dispatch]);
@@ -32,17 +36,21 @@ function ProductList() {
     }
   }, [initialCategoryId]);
 
+  // Menampilkan loading jika status produk sedang dimuat
   if (productStatus === "loading") {
     return <div className="text-center text-lg">Loading...</div>;
   }
 
+  // Menampilkan error jika status produk gagal
   if (productStatus === "failed") {
     return <div className="text-center text-red-500">Error: {error}</div>;
   }
 
+  // Render tampilan komponen
   return (
     <div>
       <div className="p-4">
+        {/* Input untuk pencarian */}
         <input
           type="text"
           placeholder="Search..."
@@ -50,6 +58,7 @@ function ProductList() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border p-2 rounded"
         />
+        {/* Dropdown untuk memilih kategori */}
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -66,7 +75,7 @@ function ProductList() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} /> // Menampilkan komponen ProductCard untuk setiap produk
         ))}
       </div>
     </div>

@@ -5,41 +5,48 @@ import useCategories from "../../../../hooks/useCategories";
 import ProductCard from "../../../../components/common/cards/ProductCard";
 import { useLocation } from "react-router-dom";
 
+// Mendefinisikan hook kustom untuk mengambil query parameters dari URL
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
+// Mendefinisikan komponen ProductList
 function ProductList() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Mendapatkan fungsi dispatch untuk mengirim aksi ke Redux
   const { products, productStatus, error } = useSelector(
-    (state) => state.products
+    (state) => state.products // Mengambil state produk dari Redux
   );
-  const { categories, status: categoriesStatus } = useCategories();
+  const { categories, status: categoriesStatus } = useCategories(); // Mengambil kategori dan statusnya
 
-  const query = useQuery();
-  const initialCategoryId = query.get("categoryId") || "";
+  const query = useQuery(); // Mengambil query parameters dari URL
+  const initialCategoryId = query.get("categoryId") || ""; // Mengambil categoryId dari query atau kosong jika tidak ada
 
-  const [selectedCategory, setSelectedCategory] = useState(initialCategoryId);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(initialCategoryId); // State untuk kategori yang dipilih
+  const [searchTerm, setSearchTerm] = useState(""); // State untuk kata kunci pencarian
 
+  // Mengambil produk berdasarkan kategori dan kata kunci pencarian
   useEffect(() => {
     dispatch(fetchProducts({ category: selectedCategory, search: searchTerm }));
   }, [selectedCategory, searchTerm, dispatch]);
 
+  // Mengatur selectedCategory jika ada initialCategoryId
   useEffect(() => {
     if (initialCategoryId) {
       setSelectedCategory(initialCategoryId);
     }
   }, [initialCategoryId]);
 
+  // Menampilkan loading jika status produk sedang loading
   if (productStatus === "loading") {
     return <div className="text-center text-lg">Loading...</div>;
   }
 
+  // Menampilkan error jika status produk gagal
   if (productStatus === "failed") {
     return <div className="text-center text-red-500">Error: {error}</div>;
   }
 
+  // Render tampilan produk
   return (
     <div>
       <div className="p-4">
@@ -56,6 +63,7 @@ function ProductList() {
           className="border p-2 rounded ml-2"
         >
           <option value="">All Categories</option>
+          {/* Menampilkan kategori jika statusnya berhasil */}
           {categoriesStatus === "succeeded" &&
             categories.map((category) => (
               <option key={category.id} value={category.id}>
