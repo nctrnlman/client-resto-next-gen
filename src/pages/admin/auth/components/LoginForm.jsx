@@ -1,12 +1,16 @@
+// Mendefinisikan komponen LoginForm yang menerima props
+
 const LoginForm = ({
-  email,
-  setEmail,
-  password,
-  setPassword,
-  errors,
-  handleSubmit,
+  email, // State untuk email
+  setEmail, // Fungsi untuk memperbarui email
+  password, // State untuk password
+  setPassword, // Fungsi untuk memperbarui password
+  errors, // Objek yang berisi pesan error
+  handleSubmit, // Fungsi untuk menangani pengiriman form
 }) => {
   return (
+    // Form untuk login dengan pengaturan CSS untuk jarak antar elemen
+
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
       <div>
         <label

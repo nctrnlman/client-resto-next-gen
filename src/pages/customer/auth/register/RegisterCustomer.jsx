@@ -10,6 +10,7 @@ import bgregister from "../../../../assets/background/bg-login.jpg";
 import { motion } from "framer-motion";
 
 function RegisterCustomer() {
+  // Menggunakan custom hook untuk mengelola state form
   const {
     name,
     setName,
@@ -25,20 +26,23 @@ function RegisterCustomer() {
   } = useRegisterForm();
   const navigate = useNavigate();
 
+  // Fungsi yang dijalankan saat form disubmit
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (await validate()) {
       try {
+        // Mengirim data registrasi ke server
         const response = await axiosInstance.post("/auth/register", {
           name,
           email,
           password,
           no_whatsapp: noWhatsapp,
-          role: role || "2",
+          role: role || "2", // Default role jika tidak diisi adalah "2"
         });
 
+        // Menampilkan notifikasi sukses
         toast.success(response.data.message);
-        navigate("/login");
+        navigate("/login"); // Mengarahkan ke halaman login setelah berhasil registrasi
       } catch (error) {
         toast.error(
           error.response?.data?.message ||
@@ -48,6 +52,7 @@ function RegisterCustomer() {
     }
   };
 
+  // Variabel animasi untuk kontainer
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -59,6 +64,7 @@ function RegisterCustomer() {
     },
   };
 
+  // Variabel animasi untuk item
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {

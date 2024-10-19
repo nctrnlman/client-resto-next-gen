@@ -3,9 +3,12 @@ import DashboardBanner from "../../../components/common/cards/DashboardBanner";
 import Layout from "../../../components/common/layouts/LayoutCustomer";
 import BillCard from "./components/BillCard";
 
+// Komponen utama BillCustomer
 function BillCustomer() {
   return (
     <Layout>
+      {" "}
+      {/* Menggunakan komponen Layout sebagai pembungkus */}
       <motion.main
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -29,7 +32,8 @@ function BillCustomer() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <BillCard />
+          <BillCard />{" "}
+          {/* Menampilkan komponen BillCard untuk informasi tagihan */}
         </motion.div>
       </motion.main>
     </Layout>

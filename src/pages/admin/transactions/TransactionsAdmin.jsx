@@ -1,6 +1,8 @@
 import DashboardBanner from "../../../components/common/cards/DashboardBanner";
 import Layout from "../../../components/common/layouts/LayoutAdmin";
 import TransactionList from "./sections/TransactionList";
+
+// Mendefinisikan komponen TransactionsAdmin
 function TransactionsAdmin() {
   return (
     <Layout>
@@ -12,7 +14,7 @@ function TransactionsAdmin() {
           />
         </div>
         <div className="px-4">
-          <TransactionList />
+          <TransactionList /> {/* Menampilkan daftar transaksi */}
         </div>
       </main>
     </Layout>

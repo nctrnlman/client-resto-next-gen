@@ -8,24 +8,26 @@ import AddModal from "../../../../components/common/cards/AddModal";
 import { toast } from "react-toastify";
 
 const UserList = () => {
+  // Mengambil data pengguna, status loading, dan error dari custom hook
   const { users, loading, error, refetch } = useFetchUsers();
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [isAddModalOpen, setAddModalOpen] = useState(false);
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // Menyimpan pengguna yang dipilih untuk edit atau hapus
+  const [isAddModalOpen, setAddModalOpen] = useState(false); // State untuk mengelola tampilan modal tambah pengguna
+  const [isEditModalOpen, setEditModalOpen] = useState(false); // State untuk mengelola tampilan modal edit pengguna
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); // State untuk mengelola tampilan modal konfirmasi hapus pengguna
 
+  // Fungsi untuk menambah pengguna baru
   const handleAddUser = async (newUser) => {
     try {
-      const userWithRole = { ...newUser, role: 1 };
+      const userWithRole = { ...newUser, role: 1 }; // Menambahkan role default ke pengguna baru
 
       const response = await axiosInstance.post(
-        "/auth/register",
+        "/auth/register", // Endpoint untuk menambahkan pengguna
         userWithRole,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Menambahkan token otentikasi
         }
       );
-      refetch();
+      refetch(); // Memperbarui daftar pengguna setelah penambahan
       setAddModalOpen(false);
       toast.success(response.data.message);
     } catch (error) {
@@ -34,27 +36,30 @@ const UserList = () => {
     }
   };
 
+  // Fungsi untuk mengedit pengguna
   const handleEdit = (user) => {
     setSelectedUser(user);
     setEditModalOpen(true);
   };
 
+  // Fungsi untuk menghapus pengguna
   const handleDelete = (user) => {
     setSelectedUser(user);
     setDeleteModalOpen(true);
   };
 
+  // Fungsi untuk mengirim data pengguna yang telah diedit
   const handleEditSubmit = async (updatedUser) => {
     try {
       const response = await axiosInstance.put(
-        `/users/${selectedUser.id}`,
+        `/users/${selectedUser.id}`, // Endpoint untuk memperbarui pengguna berdasarkan ID
         updatedUser,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Menambahkan token otentikasi
         }
       );
-      refetch();
-      setEditModalOpen(false);
+      refetch(); // Memperbarui daftar pengguna setelah pengeditan
+      setEditModalOpen(false); // Menutup modal setelah berhasil
       toast.success(response.data.message);
     } catch (error) {
       console.error("Failed to update user:", error);
@@ -62,13 +67,15 @@ const UserList = () => {
     }
   };
 
+  // Fungsi untuk mengonfirmasi penghapusan pengguna
   const handleDeleteConfirm = async () => {
     try {
       const response = await axiosInstance.delete(`/users/${selectedUser.id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        // Endpoint untuk menghapus pengguna
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Menambahkan token otentikasi
       });
-      refetch();
-      setDeleteModalOpen(false);
+      refetch(); // Memperbarui daftar pengguna setelah penghapusan
+      setDeleteModalOpen(false); // Menutup modal setelah berhasil
       toast.success(response.data.message);
     } catch (error) {
       console.error("Failed to delete user:", error);
@@ -76,6 +83,7 @@ const UserList = () => {
     }
   };
 
+  // Definisi kolom untuk tabel pengguna
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 200 },
@@ -91,10 +99,12 @@ const UserList = () => {
     },
   ];
 
+  // Menangani kasus error
   if (error) {
     return <div>Error: {error}</div>;
   }
 
+  // Render tampilan daftar pengguna
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">User List</h1>

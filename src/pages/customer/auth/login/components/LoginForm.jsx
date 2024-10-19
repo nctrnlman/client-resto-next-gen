@@ -2,12 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const LoginForm = ({
-  emailOrWhatsapp,
-  setEmailOrWhatsapp,
-  password,
-  setPassword,
-  errors,
-  handleSubmit,
+  emailOrWhatsapp, // State untuk menyimpan nilai email atau nomor WhatsApp
+  setEmailOrWhatsapp, // Fungsi untuk mengatur nilai email atau nomor WhatsApp
+  password, // State untuk menyimpan nilai password
+  setPassword, // Fungsi untuk mengatur nilai password
+  errors, // Objek untuk menyimpan pesan kesalahan validasi
+  handleSubmit, // Fungsi untuk menangani submit form
 }) => {
   return (
     <motion.form
@@ -90,6 +90,8 @@ const LoginForm = ({
           </motion.p>
         )}
       </motion.div>
+
+      {/* Tombol untuk submit form */}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

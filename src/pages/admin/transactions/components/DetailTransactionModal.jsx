@@ -4,9 +4,12 @@ import {
 } from "../../../../utils/formatters";
 
 const DetailTransactionModal = ({ isOpen, onClose, order }) => {
+  // Jika modal tidak terbuka, kembalikan null
   if (!isOpen) return null;
 
+  // Fungsi untuk menangani penutupan modal
   const handleClose = (e) => {
+    // Menutup modal jika klik terjadi pada background modal atau tombol close
     if (e.target.id === "modal-container" || e.target.tagName === "BUTTON") {
       onClose();
     }
