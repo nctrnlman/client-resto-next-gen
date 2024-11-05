@@ -19,21 +19,21 @@ import RegisterCustomer from "./pages/customer/auth/register/RegisterCustomer";
 import BillCustomer from "./pages/customer/bill/BillCustomer";
 
 function App() {
-  const location = useLocation(); // Mendapatkan lokasi saat ini dari URL
-  const [isCartOpen, setIsCartOpen] = useState(false); // State untuk mengontrol visibilitas modal keranjang
-  const dispatch = useDispatch(); // Menginisialisasi dispatch dari Redux
-  const user = useSelector((state) => state.user.User); // Mengambil data pengguna dari Redux store
+  const location = useLocation(); // Get current URL location
+  const [isCartOpen, setIsCartOpen] = useState(false); // State to control cart modal visibility
+  const dispatch = useDispatch(); // Initialize Redux dispatch
+  const user = useSelector((state) => state.user.User); // Get user data from Redux store
 
-  // Mengambil detail pengguna saat komponen pertama kali dimuat
+  // Fetch user details when component first mounts
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Mengambil token dari local storage
+    const token = localStorage.getItem("token"); // Get token from local storage
 
-    // Jika token ada dan data pengguna belum diambil
+    // If token exists and user data has not been fetched
     if (token && user.length === 0) {
       const fetchUser = async () => {
         try {
-          const userData = await fetchUserDetail(token); // Mengambil data pengguna
-          dispatch(setUser(userData.data)); // Menyimpan data pengguna ke Redux store
+          const userData = await fetchUserDetail(token); // Fetch user data
+          dispatch(setUser(userData.data)); // Store user data in Redux
         } catch (error) {
           console.error("Error fetching user data:", error.message);
         }
@@ -41,17 +41,20 @@ function App() {
 
       fetchUser();
     }
-  }, [dispatch, user]); // Menjalankan efek ini saat dispatch atau user berubah
+  }, [dispatch, user]); // Run this effect when dispatch or user changes
 
-  // Mengatur fungsi untuk membuka modal keranjang
+  // Function to open cart modal
   const handleCartIconClick = () => {
     setIsCartOpen(true);
   };
 
-  // Mengatur fungsi untuk menutup modal keranjang
+  // Function to close cart modal
   const handleCloseCartModal = () => {
     setIsCartOpen(false);
   };
+
+  // Hide cart on specific routes
+  const hideCartOnRoutes = ["/login", "/register", "/admin/login"];
 
   return (
     <>
@@ -122,13 +125,14 @@ function App() {
         <Route path="/admin/login" element={<LoginAdmin />} />
       </Routes>
 
-      {/* Show cart icon and modal if not on admin route */}
-      {!location.pathname.startsWith("/admin") && (
-        <>
-          <CartIcon onClick={handleCartIconClick} />
-          <CartModal isOpen={isCartOpen} onClose={handleCloseCartModal} />
-        </>
-      )}
+      {/* Show cart icon and modal if not on admin route or specific login/register routes */}
+      {!location.pathname.startsWith("/admin") &&
+        !hideCartOnRoutes.includes(location.pathname) && (
+          <>
+            <CartIcon onClick={handleCartIconClick} />
+            <CartModal isOpen={isCartOpen} onClose={handleCloseCartModal} />
+          </>
+        )}
     </>
   );
 }
