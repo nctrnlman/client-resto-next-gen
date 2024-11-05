@@ -6,7 +6,7 @@ import RegisterForm from "./components/RegisterForm";
 import icon from "../../../../assets/logo/garden-logo.png";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import bgregister from "../../../../assets/background/bg-login.jpg";
+import bgregister from "../../../../assets/background/bg-login.png";
 import { motion } from "framer-motion";
 
 function RegisterCustomer() {
@@ -87,7 +87,7 @@ function RegisterCustomer() {
       }}
     >
       <motion.div
-        className="max-w-md w-full space-y-8 bg-white bg-opacity-90 p-10 rounded-xl shadow-2xl"
+        className="max-w-md w-full space-y-8 bg-white bg-opacity-70 p-10 rounded-xl shadow-2xl"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -102,13 +102,13 @@ function RegisterCustomer() {
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
           />
           <motion.h2
-            className="mt-6 text-3xl font-extrabold text-gray-900"
+            className="mt-6 text-3xl font-extrabold text-gray-800"
             variants={itemVariants}
           >
             Create your account
           </motion.h2>
           <motion.p
-            className="mt-2 text-sm text-gray-600"
+            className="mt-2 text-sm text-gray-700"
             variants={itemVariants}
           >
             Join Garden Sky Restaurant
@@ -127,7 +127,7 @@ function RegisterCustomer() {
           handleSubmit={handleSubmit}
         />
         <motion.div className="text-center" variants={itemVariants}>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-700">
             Already have an account?
             <a
               href="/login"
