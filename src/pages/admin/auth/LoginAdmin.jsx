@@ -12,8 +12,14 @@ import { setUser } from "../../../features/users/user";
 // Mendefinisikan komponen LoginAdmin
 function LoginAdmin() {
   // Menggunakan hook kustom untuk menangani email, password, dan validasi
-  const { email, setEmail, password, setPassword, errors, validate } =
-    useLoginForm();
+  const {
+    emailOrWhatsapp,
+    setEmailOrWhatsapp,
+    password,
+    setPassword,
+    errors,
+    validate,
+  } = useLoginForm();
   const navigate = useNavigate(); // Mendapatkan fungsi navigasi
   const dispatch = useDispatch(); // Mendapatkan fungsi dispatch untuk Redux
 
@@ -24,7 +30,7 @@ function LoginAdmin() {
       try {
         // Mengirim permintaan POST untuk login
         const response = await axiosInstance.post("/auth/login", {
-          email,
+          emailOrWhatsapp,
           password,
         });
 
@@ -65,8 +71,8 @@ function LoginAdmin() {
               </h1>
               {/* Menggunakan komponen LoginForm dengan props yang diperlukan */}
               <LoginForm
-                email={email}
-                setEmail={setEmail}
+                emailOrWhatsapp={emailOrWhatsapp} // Mengoper state email/WhatsApp ke komponen LoginForm
+                setEmailOrWhatsapp={setEmailOrWhatsapp}
                 password={password}
                 setPassword={setPassword}
                 errors={errors}
