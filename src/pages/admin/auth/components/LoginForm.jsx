@@ -1,8 +1,8 @@
 // Mendefinisikan komponen LoginForm yang menerima props
 
 const LoginForm = ({
-  email, // State untuk email
-  setEmail, // Fungsi untuk memperbarui email
+  emailOrWhatsapp, // State untuk menyimpan nilai email atau nomor WhatsApp
+  setEmailOrWhatsapp, // Fungsi untuk memperbarui email
   password, // State untuk password
   setPassword, // Fungsi untuk memperbarui password
   errors, // Objek yang berisi pesan error
@@ -25,11 +25,11 @@ const LoginForm = ({
           id="email"
           className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-600 focus:border-brand-600 block w-full p-2.5"
           placeholder="name@company.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={emailOrWhatsapp}
+          onChange={(e) => setEmailOrWhatsapp(e.target.value)}
         />
-        {errors.email && (
-          <div className="text-red-500 text-sm">{errors.email}</div>
+        {errors.emailOrWhatsapp && (
+          <div className="text-red-500 text-sm">{errors.emailOrWhatsapp}</div>
         )}
       </div>
       <div>
